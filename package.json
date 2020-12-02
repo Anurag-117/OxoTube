@@ -1,0 +1,19 @@
+{
+  "name": "oxotube",
+  "version": "1.0.0",
+  "description": "embedded video analytics",
+  "main": "index.js",
+  "dependencies": {
+    "bootstrap": "^4.5.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/Anurag-117/OxoTube.git"
+  },
+  "author": "Anurag Dhadse",
+  "license": "All Right Reserved"
+}

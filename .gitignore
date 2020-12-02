@@ -1,0 +1,12 @@
+venv/
+*.DS_Store
+*.pyc
+__pycache__
+*/*/*/__pycache__/
+*/*/__pycache__/
+*/__pycache__/
+.idea
+Dockerfile
+.dockerignore
+node_modules/
+db.sqlite3
