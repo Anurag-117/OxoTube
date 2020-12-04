@@ -17,8 +17,12 @@ def handler500(request, *args, **argv):
 
 @login_required()
 def home_view(request):
-    videos = VideoItem.objects.all()
-    context = {'videos': videos}
+    if request.user.is_authenticated:
+        videos = VideoItem.objects.all()
+        context = {'videos': videos}
+    else:
+        form = LoginForm()
+        return render(request, 'home/signin.html', {'form': form})
     return render(request, 'home/videoCatalog.html', context)
 
 
