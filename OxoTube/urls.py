@@ -23,9 +23,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     re_path('', include(('home.urls', 'home'), namespace='home')),
     re_path('dashboard/', include(('analytics.urls', 'analytics'), namespace='analytics')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-urlpatterns += staticfiles_urlpatterns()
+    re_path('api/', include(('serverapi.urls', 'serverapi'), namespace='serverapi')),
+]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += staticfiles_urlpatterns()
 
 handler404 = 'home.views.handler404'
 handler500 = 'home.views.handler500'

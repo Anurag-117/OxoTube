@@ -8,7 +8,7 @@ User = settings.AUTH_USER_MODEL
 
 class ObjectViewed(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    ip_address = models.CharField(max_length=220, blank=True, null=True)
+    ip_address = models.GenericIPAddressField(max_length=220, blank=True, null=True)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')

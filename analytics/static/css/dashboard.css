@@ -189,7 +189,7 @@ p{
     transition: all 300ms linear;
     transition-delay: 1700ms;
 }
-body.hero-anime p{
+.hero-anime p{
 	opacity: 0;
 	transform: translateY(40px);
     transition-delay: 1700ms;
@@ -390,6 +390,10 @@ body.dark h1 span{
 }
 body.dark p{
 	color: #fff;
+    transition-delay: 0ms !important;
+}
+body.dark h6{
+	color: #000000;
     transition-delay: 0ms !important;
 }
 body.dark .bg-light {

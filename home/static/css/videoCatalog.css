@@ -513,7 +513,6 @@ body.dark .logo img {
 .no-decorate{
 	text-decoration: none!important;
 }
-
 /* toggle button */
 .checkbox {
 	opacity: 0;
@@ -558,3 +557,5 @@ body.dark .logo img {
 .fa-sun {
 	color: #f39c12;
 }
+
+

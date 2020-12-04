@@ -1,114 +1,63 @@
+{% extends 'analytics/dashboardBase.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
-    <link rel="icon" href="{% static 'images/video-play-32.ico' %}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link type="text/css" rel="stylesheet" href="{% static 'css/dashboard.css' %}">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
-    {% block css %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h6>I wasn't able to count the views of youtube, but below charts and tables data is fetched from server api, and login/signup/logout and video addition is working</h6>
+                </div>
+                <div class="card-body">
+                    <canvas id="myChart" width="200" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card shadow mt-3">
+    <div class="card-header">
+        <h6>Currently registered users</h6>
+    </div>
+        <div class="card-body overflow-auto">
+            <table class="table" id="usertable">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">First name</th>
+                      <th scope="col">Last name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Active</th>
+                      <th scope="row">Superuser</th>
+                      <th scope="row">Staff</th>
+                      <th scope="row">Joined date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+        </div>
+    </div>
+    <div class="card shadow mt-3">
+    <div class="card-header">
+        <h6>Currently embedded videos</h6>
+    </div>
+        <div class="card-body overflow-auto">
+            <table class="table" id="embedvideos">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">TimeStamp</th>
+                      <th scope="col">URL</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+        </div>
+    </div>
 
-    {% endblock %}
-</head>
-<body class="hero-anime">
-<!-- Heading -->
-	<div class="navigation-wrap bg-light start-header start-style">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<nav class="navbar navbar-expand-md navbar-light">
-
-						<a class="navbar-brand" href="{% url 'home:videosPage' %}"><img src="{% static 'images/video-play-512.png' %}" alt=""></a>
-                        <div>
-                            <a href="{% url 'home:videosPage' %}" class="no-decorate"> <H3 class="pt-2">OxoTube</H3></a>
-                        </div>
-
-						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-							<span class="navbar-toggler-icon"></span>
-						</button>
-
-						<div class="collapse navbar-collapse" id="navbarSupportedContent">
-							<ul class="navbar-nav ml-auto py-4 py-md-0">
-								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4 active">
-									<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Home</a>
-									<div class="dropdown-menu">
-										<a class="dropdown-item" href="#">Action</a>
-										<a class="dropdown-item" href="#">Another action</a>
-										<a class="dropdown-item" href="#">Something else here</a>
-										<a class="dropdown-item" href="#">Another action</a>
-									</div>
-								</li>
-								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-									<a class="nav-link" href="#">Portfolio</a>
-								</li>
-								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-									<a class="nav-link" href="#">Agency</a>
-								</li>
-								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-									<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Services</a>
-									<div class="dropdown-menu">
-										<a class="dropdown-item" href="#">Action</a>
-										<a class="dropdown-item" href="#">Another action</a>
-										<a class="dropdown-item" href="#">Something else here</a>
-										<a class="dropdown-item" href="#">Another action</a>
-									</div>
-								</li>
-								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-									<a class="nav-link" href="#">Journal</a>
-								</li>
-								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-									<a class="nav-link" href="{% url 'analytics:dashboardPage' %}">Dashboard</a>
-								</li>
-                                <li class="pl-4 pl-md-0 ml-0 ml-md-4">
-									<div>
-                                        <input type="checkbox" class="checkbox" id="chk" />
-                                        <label class="label" for="chk">
-                                            <i class="fas fa-moon"></i>
-                                            <i class="fas fa-sun"></i>
-                                            <span class="ball"></span>
-                                        </label>
-                                    </div>
-								</li>
-
-							</ul>
-						</div>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="section full-height container">
-		<div class="hero-side" >
-			<div class="section">
-				<div class="container">
-					<div class="row">
-						<div class="col-12">
-                            <h1 style="text-align: left;"><span>S</span><span>t</span><span>a</span><span>t</span><span>s</span></h1>
-				            <p>Get a bird eye view of your viewers</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="my-5 py-5">
-	</div>
-
-
-
-
-
-</body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script type="text/javascript" rel="script" src="{% static 'js/dashboard.js' %}"></script>
-{% block js %}
 
 
 {% endblock %}
-</html>
+
+{% block js %}
+    <script type="text/javascript" rel="script" src="{% static 'js/data.js' %}"></script>
+{% endblock %}

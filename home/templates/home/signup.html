@@ -1,0 +1,171 @@
+{% load static %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <title>Sign Up</title>
+    <style>#loader {
+        transition: all .3s ease-in-out;
+        opacity: 1;
+        visibility: visible;
+        position: fixed;
+        height: 100vh;
+        width: 100%;
+        background: #fff;
+        z-index: 90000
+    }
+
+    #loader.fadeOut {
+        opacity: 0;
+        visibility: hidden
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: calc(50% - 20px);
+        left: calc(50% - 20px);
+        background-color: #333;
+        border-radius: 100%;
+        -webkit-animation: sk-scaleout 1s infinite ease-in-out;
+        animation: sk-scaleout 1s infinite ease-in-out
+    }
+
+    @-webkit-keyframes sk-scaleout {
+        0% {
+            -webkit-transform: scale(0)
+        }
+        100% {
+            -webkit-transform: scale(1);
+            opacity: 0
+        }
+    }
+
+    @keyframes sk-scaleout {
+        0% {
+            -webkit-transform: scale(0);
+            transform: scale(0)
+        }
+        100% {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+            opacity: 0
+        }
+    }</style>
+    <link rel="icon" href="{% static 'images/video-play-32.ico' %}">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <script type="text/javascript">
+        let user = '{{ request.user }}'
+
+        function getToken(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        const csrftoken = getToken('csrftoken');
+    </script>
+</head>
+<body class="app">
+<div id="loader">
+    <div class="spinner"></div>
+</div>
+<script>window.addEventListener('load', function load() {
+    const loader = document.getElementById('loader');
+    setTimeout(function () {
+        loader.classList.add('fadeOut');
+    }, 300);
+});</script>
+<div class="peers ai-s fxw-nw h-100vh">
+    <div class="peer peer-greed h-100 pos-r bgr-n bgpX-c bgpY-c bgsz-cv"
+         style="background-image:url({% static 'images/bg.jpg' %})">
+        <div class="pos-a centerXY">
+            <div class="bdrs-50p pos-r" style="width:120px;height:120px"><img class="pos-a centerXY"
+                                                                              src="{% static 'images/video-play-128.png' %}"
+                                                                              alt=""></div>
+        </div>
+    </div>
+    <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style="min-width:320px"><h4
+            class="fw-300 c-grey-900 mB-40">Register</h4>
+
+        <form class="block-register" action="{% url 'home:signUpPage' %}" method="POST">
+            {% csrf_token %}
+            <label class="text-normal text-dark">Username</label>
+            <div class="form-group form-row">
+                <div class="col">
+                    {{ signup_form.first_name | as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ signup_form.last_name | as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-group"><label class="text-normal text-dark">Email Address</label>
+                {{ signup_form.userEmail | as_crispy_field }}
+            </div>
+            <div class="form-group"><label class="text-normal text-dark">Password</label>
+                {{ signup_form.password1 | as_crispy_field }}
+            </div>
+            <div class="form-group"><label class="text-normal text-dark">Confirm Password</label>
+                {{ signup_form.password2 |as_crispy_field}}
+            </div>
+            <div class="form-group">{{ signup_form.help_text }}</div>
+
+            <!-- Password check alert-->
+            <div id="divCheckPasswordMatch">
+
+            </div>
+            <!-- Alert messages if cannot create user-->
+            {% if signup_form.errors %}
+            {% for field in signup_form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>{{ error|escape }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for error in signup_form.non_field_errors %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>{{ error|escape }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% endif %}
+
+            <!-- alert section ends-->
+
+            <div class="form-group">
+                <button type="submit" value="Sign Up" class="btn btn-primary">Register</button>
+            </div>
+        </form>
+            <div class="text-center mt-4 font-weight-bold"> Already have an account? <a
+                    href="{% url 'home:logInPage' %}" class="text-primary">Login</a>
+            </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'js/vendor.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bundle.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/passcheck.js' %}"></script>
+</body>
+</html>
