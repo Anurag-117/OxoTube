@@ -1,1 +1,1 @@
-web: gunicorn Shopiva.wsgi --log-file - 
+web: gunicorn OxoTube.wsgi --log-file - 
